@@ -1,0 +1,72 @@
+// reset css
+body,
+div,
+span,
+header,
+footer,
+nav,
+section,
+aside,
+article,
+ul,
+dl,
+dt,
+dd,
+li,
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+i,
+b,
+textarea,
+button,
+input,
+select,
+figure,
+figcaption {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: none;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+}
+
+a {
+  color: #777;
+}
+
+i {
+  font-style: normal;
+}
+
+html {
+  overflow: auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", STHeiti, "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  line-height: 1.4;
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  direction: ltr;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
