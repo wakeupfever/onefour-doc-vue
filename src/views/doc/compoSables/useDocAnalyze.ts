@@ -1,14 +1,15 @@
-import { h } from "@vue/runtime-core"
+import { EmitsOptions, h, SetupContext } from "@vue/runtime-core"
 import { useRouter } from "vue-router"
 
-const router = useRouter()
+/** @type {*} */
+export const MENU_DOC = import.meta.glob("../../../doc/**/*")
 
 /**
  * @description 转换 doc 路径
  * @param {string[][]} list
  * @return {*} 
  */
-function useCreateDoc(list: string[][]) {
+const useCreateDoc = (list: string[][]) => {
   return list.reduce((obj, item) => {
     item.reduce((o: any, name: string) => {
       let item = o.find((ci: any): boolean => ci.name === name)
@@ -29,12 +30,12 @@ function useCreateDoc(list: string[][]) {
  * @description 读取 doc 路径
  * @return {*} 
  */
-function useDocAnalyze () {
-  const doc = import.meta.glob("../../../doc/**/*")
-  let list = Object.keys(doc).map((item) => {
+const useDocAnalyze = () => {
+  let list = Object.keys(MENU_DOC).map((item) => {
     let current = item.replace(/\.\.\/doc\//, "").split("/");
     return current.slice(2, current.length);
   })
+  
   let allDocPath = useCreateDoc(list)
   return allDocPath
 }
@@ -45,34 +46,36 @@ function useDocAnalyze () {
  * @param {*} [l=[]]
  * @return {*} 
  */
-function createMenuElement(list: any = useDocAnalyze(), l: any = []) {
+const createMenuElement = (ctx: SetupContext<EmitsOptions>, list: any = useDocAnalyze(), l: any = []) => {
+  const router = useRouter()
   for (let i = 0; i < list.length; i++) {
     const item = list[i];
     l.push(
-      h("ul", {
-        class: ["sidebar-ul"],
-        onClick: function () {
-          const router = useRouter()
-          console.log(router)
-          // router.push('/test')
-        }
+      h("section", {
+        class: ["sidebar-ul"]
       }, [
-        h("li", { class: ["sidebar-li"] }, item.name),
+        h("div", { 
+          class: ["sidebar-li"],
+          onClick: () => {
+            const keys = Object.keys(MENU_DOC)
+            const values = Object.values(MENU_DOC)
+            let keyIndex = keys.findIndex((name) => name.includes(item.name))
+            ctx.emit('setDocCurrent', values[keyIndex])
+          }
+        }, item.name),
       ])
     );
     if (item.children.length) {
-      createMenuElement(item.children, l[l.length - 1].children);
+      createMenuElement(ctx, item.children, l[l.length - 1].children);
     }
   }
   return l;
 };
 
-function useCreateMenuElement() {
-  return createMenuElement()
-}
 
-export const useDocMenu = {
-  setup() {
-    return () => createMenuElement()
+export const UseDocMenu = {
+  emits: ['setDocCurrent'],
+  setup(props: {}, ctx: SetupContext<EmitsOptions>) {
+    return () => createMenuElement(ctx)
   }
 }
