@@ -1,5 +1,5 @@
-const isFun = fn => typeof fn === 'function'
-const getType = fn = Object.prototype.toString.call(fn)
+const isFun = (fn) => typeof fn === 'function'
+const getType = (fn = Object.prototype.toString.call(fn))
 
 const PENDING = 'PENDING'
 const FULFILLED = 'Rejected'
@@ -15,7 +15,7 @@ class PromiseFns {
     this.promiseResult = undefined
   }
 
-  get [Symbol.toStringTag] () {
+  get [Symbol.toStringTag]() {
     return 'PromiseFns'
   }
 }

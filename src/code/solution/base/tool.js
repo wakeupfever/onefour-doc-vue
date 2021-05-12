@@ -1,4 +1,3 @@
-
 /**
  * @description 深拷贝
  * @param {RegExp|Error|Date|Function|Symbol|Map|Set|Array|Object} val
@@ -7,58 +6,64 @@
  */
 function deepCloneFns(val, hash = new WeakMap()) {
   if (!val) {
-    return val;
+    return val
   }
-  if (hash.has(val)) return hash.get(val);
-  const ctor = val.constructor;
+  if (hash.has(val)) return hash.get(val)
+  const ctor = val.constructor
   switch (ctor) {
     case RegExp:
-      return new RegExp(val);
+      return new RegExp(val)
     case Error:
-      return new Error(val.message);
+      return new Error(val.message)
     case Date:
-      return new Date(val.getTime());
+      return new Date(val.getTime())
     case Function:
-      return eval(`() => ${val.toString()}`)();
+      return eval(`() => ${val.toString()}`)()
     case Symbol:
-      return ctor(val.toString().replace(/^Symbol\((.*)\)$/, "$1"));
+      return ctor(val.toString().replace(/^Symbol\((.*)\)$/, '$1'))
     case Map:
-      return new Map([...val]);
+      return new Map([...val])
     case Set:
-      return new Set([...val]);
+      return new Set([...val])
     case Array:
       return val.map((v) => {
-        return deepClone(v, hash);
-      });
+        return deepClone(v, hash)
+      })
     case Object:
-      const obj = {};
-      hash.set(val, obj);
+      const obj = {}
+      hash.set(val, obj)
       Object.keys(val).forEach((k) => {
-        obj[k] = deepClone(val[k], hash);
-      });
-      return obj;
+        obj[k] = deepClone(val[k], hash)
+      })
+      return obj
     default:
-      return val;
+      return val
   }
 }
 
 /**
  * @description 反转数字
  * @param {Number} n
- * @return {Number} 
+ * @return {Number}
  */
 function reverseNumberFns(n) {
   if (!n) return
   const max = 2 ** 31 - 1
-  const min = - (2 ** 31)
-  const result = (n > 0 ? 1 : -1) * String(n).split('').filter((n) => n !== '-').reverse().join('')
+  const min = -(2 ** 31)
+  const result =
+    (n > 0 ? 1 : -1) *
+    String(n)
+      .split('')
+      .filter((n) => n !== '-')
+      .reverse()
+      .join('')
   return result > max || result < min ? 0 : result
 }
 
 /**
  * @description 实现new字符
  * @param {*} ctor
- * @return {object} 
+ * @return {object}
  */
 function newFns(ctor) {
   if (typeof ctor !== 'function') return
@@ -77,27 +82,26 @@ function newFns(ctor) {
  * @description 报错继续执行次数
  * @param {Function} fn
  * @param {number} n
- * @return {Function} 
+ * @return {Function}
  */
 function withRetryFns(fn, n) {
   let retryTime = 0
   const fnRetry = (...args) => {
-    new Promise((resolve => resolve(fn(...args)))).catch(error =>
+    new Promise((resolve) => resolve(fn(...args))).catch((error) =>
       ++retryTime > n
         ? Promise.resolve(error)
-        : new Promise(resolve =>
-          setTimeout(() => resolve(fnRetry(...args)), 1000)
-        )
+        : new Promise((resolve) =>
+            setTimeout(() => resolve(fnRetry(...args)), 1000),
+          ),
     )
   }
   return fnRetry
 }
 
-
 /**
- * @description 验证是否是回文字符串 
+ * @description 验证是否是回文字符串
  * @param {*} s
- * @return {*} 
+ * @return {*}
  */
 function validPalindrome(s) {
   let len = s.length

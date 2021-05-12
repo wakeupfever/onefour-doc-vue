@@ -1,5 +1,4 @@
-import { ComponentCustomProperties } from 'vue'
-import { Store } from 'vuex'
+import { Getter, Store } from 'vuex'
 
 declare module '@vue/runtime-core' {
   // declare your own store states
@@ -7,12 +6,12 @@ declare module '@vue/runtime-core' {
     docCurrentPath: string
   }
 
-  interface IDocGetter {
-    getDocCurrentPath: Function
-  }
-
   interface ITestState {
     test: string
+  }
+
+  interface IDocGetter {
+    getDocCurrentPath: Getter<IDocState, IDocState>
   }
 
   type IAllType = IDocState & ITestState

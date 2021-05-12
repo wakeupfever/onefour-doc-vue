@@ -1,4 +1,4 @@
-function ListNode (val) {
+function ListNode(val) {
   this.val = val
   this.next = null
 }
@@ -20,9 +20,9 @@ node6.next = node7
  * @description 合并有序链表
  * @param {*} l1
  * @param {*} l2
- * @return {*} 
+ * @return {*}
  */
-function mergeTwoLists (l1, l2) {
+function mergeTwoLists(l1, l2) {
   // 定义链表开始
   let head = new ListNode(null)
   // 获取当前操作的链表
@@ -46,14 +46,14 @@ function mergeTwoLists (l1, l2) {
   current.next = l1 !== null ? l1 : l2
   // 返回最终结果
   return head.next
-};
+}
 
 let repeatList = mergeTwoLists(node1, node5)
-
+console.log(repeatList)
 // /**
 //  * @description 链表去重
 //  * @param {*} head
-//  * @return {*} 
+//  * @return {*}
 //  */
 // function duplicates (head) {
 //   let cur = head
@@ -72,7 +72,7 @@ let repeatList = mergeTwoLists(node1, node5)
 // /**
 //  * @description 删除重复的所有链表
 //  * @param {*} head
-//  * @return {*} 
+//  * @return {*}
 //  */
 // function deleteAllDuplicates (head) {
 //   if (!head || !head.next) {

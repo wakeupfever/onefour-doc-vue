@@ -3,8 +3,8 @@
 </template>
 <script lang="ts">
 export default {
-  setup (props: {}) {
+  setup(props: {}) {
     console.log(props)
-  }
+  },
 }
 </script>

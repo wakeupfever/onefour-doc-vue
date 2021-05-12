@@ -1,13 +1,13 @@
-import { EmitsOptions, h, SetupContext } from "@vue/runtime-core"
-import { useRouter } from "vue-router"
+import { EmitsOptions, h, SetupContext } from '@vue/runtime-core'
+// import { useRouter } from "vue-router"
 
 /** @type {*} */
-export const MENU_DOC = import.meta.glob("../../../doc/**/*")
+export const MENU_DOC = import.meta.glob('../../../doc/**/*')
 
 /**
  * @description 转换 doc 路径
  * @param {string[][]} list
- * @return {*} 
+ * @return {*}
  */
 const useCreateDoc = (list: string[][]) => {
   return list.reduce((obj, item) => {
@@ -17,10 +17,10 @@ const useCreateDoc = (list: string[][]) => {
         item = {
           name: name,
           children: [],
-        };
-        o.push(item);
+        }
+        o.push(item)
       }
-      return item.children;
+      return item.children
     }, obj)
     return obj
   }, [])
@@ -28,15 +28,15 @@ const useCreateDoc = (list: string[][]) => {
 
 /**
  * @description 读取 doc 路径
- * @return {*} 
+ * @return {*}
  */
 const useDocAnalyze = () => {
-  let list = Object.keys(MENU_DOC).map((item) => {
-    let current = item.replace(/\.\.\/doc\//, "").split("/");
-    return current.slice(2, current.length);
+  const list = Object.keys(MENU_DOC).map((item) => {
+    const current = item.replace(/\.\.\/doc\//, '').split('/')
+    return current.slice(2, current.length)
   })
-  
-  let allDocPath = useCreateDoc(list)
+
+  const allDocPath = useCreateDoc(list)
   return allDocPath
 }
 
@@ -44,38 +44,51 @@ const useDocAnalyze = () => {
  * @description 生成 doc menu 节点
  * @param {*} list
  * @param {*} [l=[]]
- * @return {*} 
+ * @return {*}
  */
-const createMenuElement = (ctx: SetupContext<EmitsOptions>, list: any = useDocAnalyze(), l: any = []) => {
-  const router = useRouter()
+const createMenuElement = (
+  ctx: SetupContext<EmitsOptions>,
+  list: any = useDocAnalyze(),
+  l: any = [],
+) => {
+  // const router = useRouter()
   for (let i = 0; i < list.length; i++) {
-    const item = list[i];
+    const item = list[i]
     l.push(
-      h("section", {
-        class: ["sidebar-ul"]
-      }, [
-        h("div", { 
-          class: ["sidebar-li"],
-          onClick: () => {
-            const keys = Object.keys(MENU_DOC)
-            const values = Object.values(MENU_DOC)
-            let keyIndex = keys.findIndex((name) => name.includes(item.name))
-            ctx.emit('setDocCurrent', values[keyIndex])
-          }
-        }, item.name),
-      ])
-    );
+      h(
+        'section',
+        {
+          class: ['sidebar-ul'],
+        },
+        [
+          h(
+            'div',
+            {
+              class: ['sidebar-li'],
+              onClick: () => {
+                const keys = Object.keys(MENU_DOC)
+                const values = Object.values(MENU_DOC)
+                const keyIndex = keys.findIndex((name) =>
+                  name.includes(item.name),
+                )
+                ctx.emit('setDocCurrent', values[keyIndex])
+              },
+            },
+            item.name,
+          ),
+        ],
+      ),
+    )
     if (item.children.length) {
-      createMenuElement(ctx, item.children, l[l.length - 1].children);
+      createMenuElement(ctx, item.children, l[l.length - 1].children)
     }
   }
-  return l;
-};
-
+  return l
+}
 
 export const UseDocMenu = {
   emits: ['setDocCurrent'],
   setup(props: {}, ctx: SetupContext<EmitsOptions>) {
     return () => createMenuElement(ctx)
-  }
+  },
 }

@@ -1,24 +1,41 @@
-import { ITestState } from "@vue/runtime-core";
-import { ActionTree, GetterTree, ModuleTree, MutationTree } from "vuex";
+import { InjectionKey } from 'vue'
+import { Getter, Store } from 'vuex'
+import { StoreModuleType } from '..'
 
-const state: ITestState = {
-  test: ''
+export interface testState {
+  value: string
+  key: string
 }
 
-const getters: GetterTree<ITestState, ITestState> = {
+export const userKey: InjectionKey<Store<testState>> = Symbol('testKey')
+
+export interface ModuleType extends StoreModuleType<testState> {
+  state: testState
+  mutations: {}
+  actions: {}
+  getters: {
+    getKey: Getter<testState, testState>
+  }
 }
 
-const actions: ActionTree<ITestState, ITestState> = {
+const testState: testState = {
+  value: 'value',
+  key: 'key',
 }
 
-const mutations: MutationTree<ITestState> = {
+const testStore: ModuleType = {
+  namespaced: true,
+  name: 'test',
+  state: {
+    ...testState,
+  },
+  mutations: {},
+  actions: {},
+  getters: {
+    getKey(state) {
+      return state.key
+    },
+  },
 }
 
-
-export const testStore = {
-  namespace: true,
-  state,
-  getters,
-  actions,
-  mutations
-}
+export default testStore

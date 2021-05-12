@@ -1,7 +1,7 @@
 /**
  * @description 快速排序
  * @param {Array<number>} arr
- * @return {Array<number>} 
+ * @return {Array<number>}
  */
 const quickSort = (arr) => {
   const list = [...arr]
@@ -17,9 +17,9 @@ const quickSort = (arr) => {
       }
       return [left, right]
     },
-    [[], []]
-  );
-  return [...quickSort(lo), pivot, ...quickSort(hi)];
+    [[], []],
+  )
+  return [...quickSort(lo), pivot, ...quickSort(hi)]
 }
 
 /**
@@ -28,11 +28,16 @@ const quickSort = (arr) => {
  * @param {Array[]} b
  * @returns {Array[]}
  */
-const cartesianProduct = (a, b) => a.reduce((p, c) => [...p, ...b.map(y => [c, y])], [])
+const cartesianProduct = (a, b) =>
+  a.reduce((p, c) => [...p, ...b.map((y) => [c, y])], [])
 
 /**
  * @description 斐波那契
  * @param {number} n
  * @returns {Array[number]}
  */
-const fibonacci = (n) => Array.from({ length: n }).reduce((acc, current, i) => acc.concat(i > 1 ? acc[i - 1] + acc[i - 2] : i), [])
+const fibonacci = (n) =>
+  Array.from({ length: n }).reduce(
+    (acc, current, i) => acc.concat(i > 1 ? acc[i - 1] + acc[i - 2] : i),
+    [],
+  )

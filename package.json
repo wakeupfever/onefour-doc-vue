@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint --ext .ts,.vue src/",
+    "lint-fix": "eslint --fix --ext .ts,.vue src/"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.23.0",

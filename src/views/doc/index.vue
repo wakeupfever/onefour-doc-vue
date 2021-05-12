@@ -3,7 +3,7 @@
     <header class="header">Doc</header>
     <div class="content">
       <aside class="aside">
-        <UseDocMenu @setDocCurrent="getDocCurrent"/>
+        <UseDocMenu @setDocCurrent="getDocCurrent" />
       </aside>
       <router-view class="main" v-slot="{ Component }">
         <Suspense>
@@ -14,29 +14,29 @@
   </div>
 </template>
 <script lang="ts">
-import { useStore } from '../../store';
-import { UseDocMenu } from "./compoSables/useDocAnalyze";
+import { useStore } from 'vuex'
+import { userKey } from '../../store/modules/test'
+import { UseDocMenu } from './compoSables/useDocAnalyze'
 
 export default {
   components: {
-    UseDocMenu
+    UseDocMenu,
   },
   setup() {
-    const store = useStore()
-    console.log(store.getters)
+    const store = useStore(userKey)
+    console.log(userKey, store)
     const getDocCurrent = (value: Function) => {
       console.log(value)
     }
     return {
-      getDocCurrent
+      getDocCurrent,
     }
   },
-};
-
+}
 </script>
 
 <style lang="scss">
-@import url('./compoSables/useDocAnalyze.scss'); 
+@import url('./compoSables/useDocAnalyze.scss');
 
 .container {
   .header {

@@ -1,18 +1,31 @@
-import { InjectionKey, IAllType, IAllModules } from '@vue/runtime-core'
-import { createStore, Store, useStore as baseUseStore } from 'vuex'
+import { InjectionKey } from '@vue/runtime-core'
+import { createStore, Module, Store, useStore as baseUseStore } from 'vuex'
 
-import { docStore } from './modules/doc'
-import { testStore } from './modules/test'
+// import { docStore } from "./modules/doc"
+import test, { testState } from './modules/test'
 
-export const key: InjectionKey<Store<IAllModules>> = Symbol()
+export interface StoreModuleType<S> extends Module<S, S> {
+  namespaced: true
+  name: string
+}
 
-export const store: Store<IAllType> = createStore<IAllType>({
+export interface RootStateTypes {
+  name: string
+  version: string
+}
+
+export interface AllStateTypes extends RootStateTypes {
+  test: testState
+}
+
+export const key: InjectionKey<Store<AllStateTypes>> = Symbol('vue-store')
+
+export default createStore({
   modules: {
-    docStore,
-    testStore,
+    test,
   },
 })
 
-export function useStore() {
-  return baseUseStore(key)
+export function useStore<T = AllStateTypes>() {
+  return baseUseStore<T>(key)
 }
