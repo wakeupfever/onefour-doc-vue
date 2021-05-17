@@ -1,33 +1,22 @@
-import { InjectionKey } from 'vue'
-import { Getter, Store } from 'vuex'
-import { StoreModuleType } from '..'
+import { AllStateTypes, InjectionKey, ModuleType } from 'vue'
+import { Store } from 'vuex'
 
-export interface testState {
+export interface TestState {
   value: string
   key: string
 }
 
-export const userKey: InjectionKey<Store<testState>> = Symbol('testKey')
+export const userKey: InjectionKey<Store<TestState>> = Symbol('testKey')
 
-export interface ModuleType extends StoreModuleType<testState> {
-  state: testState
-  mutations: {}
-  actions: {}
-  getters: {
-    getKey: Getter<testState, testState>
-  }
-}
-
-const testState: testState = {
+const TestState: TestState = {
   value: 'value',
   key: 'key',
 }
 
-const testStore: ModuleType = {
+const testStore: ModuleType<TestState, AllStateTypes> = {
   namespaced: true,
-  name: 'test',
   state: {
-    ...testState,
+    ...TestState,
   },
   mutations: {},
   actions: {},

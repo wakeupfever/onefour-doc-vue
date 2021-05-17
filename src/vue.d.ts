@@ -1,28 +1,34 @@
-import { Getter, Store } from 'vuex'
+import { Action, Getter, Mutation, Store } from 'vuex'
+import { DocState } from './store/modules/doc'
+import { TestState } from './store/modules/test'
 
 declare module '@vue/runtime-core' {
   // declare your own store states
-  interface IDocState {
-    docCurrentPath: string
+
+  interface GetterTree<S, R> {
+    getKey: Getter<S, R>
   }
 
-  interface ITestState {
-    test: string
+  interface ModuleType<T, R> {
+    namespaced: boolean
+    state: T
+    getters: {
+      [key in string]: Getter<T, R>
+    }
+    actions: {
+      [key in string]: Action<T, R>
+    }
+    mutations: {
+      [key in string]: Mutation<T>
+    }
   }
 
-  interface IDocGetter {
-    getDocCurrentPath: Getter<IDocState, IDocState>
+  export interface AllStateTypes {
+    test: TestState
+    doc: DocState
   }
-
-  type IAllType = IDocState & ITestState
-
-  interface IAllModules {
-    docStore: IDocState
-    testStore: ITestState
-  }
-
   // provide typings for `this.$store`
   interface ComponentCustomProperties {
-    $store: Store<IAllType>
+    $store: Store<AllStateTypes>
   }
 }

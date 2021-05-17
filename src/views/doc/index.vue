@@ -7,15 +7,15 @@
       </aside>
       <router-view class="main" v-slot="{ Component }">
         <Suspense>
-          <component :test="1" :is="Component" />
+          <component :is="Component" />
         </Suspense>
       </router-view>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { useStore } from 'vuex'
-import { userKey } from '../../store/modules/test'
+import { useStore } from '~/store/index'
+import { docKey } from '~/store/modules/doc'
 import { UseDocMenu } from './compoSables/useDocAnalyze'
 
 export default {
@@ -23,8 +23,8 @@ export default {
     UseDocMenu,
   },
   setup() {
-    const store = useStore(userKey)
-    console.log(userKey, store)
+    const store = useStore()
+    console.log(store, docKey)
     const getDocCurrent = (value: Function) => {
       console.log(value)
     }

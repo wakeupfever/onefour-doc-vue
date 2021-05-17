@@ -6,16 +6,25 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "./src/assets/stylus/common/reset.scss";'
-      }
-    }
+        additionalData: '@import "./src/assets/stylus/common/reset.scss";',
+      },
+    },
   },
   resolve: {
     alias: [
-      { find: '~', replacement: resolve(__dirname, 'src') }
-    ]
+      { 
+        find: '~', replacement: `${resolve(__dirname, 'src')}`
+      }
+    ],
   },
-  plugins: [
-    vue()
-  ]
+  plugins: [vue()],
+  optimizeDeps: {
+    include: [
+      'vue',
+      'vue-router',
+    ],
+    exclude: [
+      'vue-demi',
+    ],
+  },
 })
