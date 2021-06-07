@@ -1,8 +1,9 @@
-import { EmitsOptions, h, SetupContext } from '@vue/runtime-core'
-// import { useRouter } from "vue-router"
+import { EmitsOptions, h, nextTick, SetupContext } from '@vue/runtime-core'
+import { useStore } from '~/store'
+import { SET_DOC_CURRENT_PATH } from '~/store/mutationTypes'
 
 /** @type {*} */
-export const MENU_DOC = import.meta.glob('../../../doc/**/*')
+export const MENU_DOC = import.meta.glob('../../../doc/**/*.md')
 
 /**
  * @description 转换 doc 路径
@@ -51,7 +52,7 @@ const createMenuElement = (
   list: any = useDocAnalyze(),
   l: any = [],
 ) => {
-  // const router = useRouter()
+  const store = useStore()
   for (let i = 0; i < list.length; i++) {
     const item = list[i]
     l.push(
@@ -65,13 +66,17 @@ const createMenuElement = (
             'div',
             {
               class: ['sidebar-li'],
-              onClick: () => {
+              onClick: async () => {
                 const keys = Object.keys(MENU_DOC)
                 const values = Object.values(MENU_DOC)
                 const keyIndex = keys.findIndex((name) =>
                   name.includes(item.name),
                 )
-                ctx.emit('setDocCurrent', values[keyIndex])
+                const result = await values[keyIndex]()
+                await nextTick()
+                console.log(result.default)
+
+                store.commit(`doc/${SET_DOC_CURRENT_PATH}`, result)
               },
             },
             item.name,

@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/doc',
     name: 'doc',
+    redirect: '/doc/same',
     component: () =>
       import(/* webpackChunkName: "doc" */ '~/views/doc/index.vue'),
     children: [
@@ -16,7 +17,7 @@ const routes: RouteRecordRaw[] = [
         name: 'same',
         component: () =>
           import(
-            /* webpackChunkName: "doc" */ '~/views/doc/children/same/index.vue'
+            /* webpackChunkName: "same" */ '~/views/doc/children/same/index.vue'
           ),
       },
     ],
@@ -25,7 +26,7 @@ const routes: RouteRecordRaw[] = [
     path: '/test',
     name: 'test',
     component: () =>
-      import(/* webpackChunkName: "doc" */ '~/views/test/index.vue'),
+      import(/* webpackChunkName: "test" */ '~/views/test/index.vue'),
   },
 ]
 

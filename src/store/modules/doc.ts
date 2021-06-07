@@ -3,7 +3,7 @@ import { Getter, Mutation, Store } from 'vuex'
 import { SET_DOC_CURRENT_PATH } from '../mutationTypes'
 
 export interface DocState {
-  docCurrentPath: string
+  docCurrentPath: Function
 }
 
 export const docKey: InjectionKey<Store<DocState>> = Symbol('docKey')
@@ -21,7 +21,7 @@ export interface DocModuleType {
 }
 
 const docState: DocState = {
-  docCurrentPath: '',
+  docCurrentPath: () => new Promise(() => {}),
 }
 
 const docStore: ModuleType<DocState, AllStateTypes> = {

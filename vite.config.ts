@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import { md } from '@cutting/rollup-plugin-md'
 
 export default defineConfig({
   css: {
@@ -10,21 +11,21 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    host: 'localhost',
+    open: true,
+  },
   resolve: {
     alias: [
-      { 
-        find: '~', replacement: `${resolve(__dirname, 'src')}`
-      }
+      {
+        find: '~',
+        replacement: `${resolve(__dirname, 'src')}`,
+      },
     ],
   },
-  plugins: [vue()],
+  plugins: [vue(), md()],
   optimizeDeps: {
-    include: [
-      'vue',
-      'vue-router',
-    ],
-    exclude: [
-      'vue-demi',
-    ],
+    include: ['vue', 'vue-router'],
+    exclude: ['vue-demi'],
   },
 })

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <header class="header">Doc</header>
+    <header class="header" @click="handleTest">Doc</header>
     <div class="content">
       <aside class="aside">
-        <UseDocMenu @setDocCurrent="getDocCurrent" />
+        <UseDocMenu />
       </aside>
       <router-view class="main" v-slot="{ Component }">
         <Suspense>
@@ -14,24 +14,15 @@
   </div>
 </template>
 <script lang="ts">
-import { useStore } from '~/store/index'
-import { docKey } from '~/store/modules/doc'
-import { UseDocMenu } from './compoSables/useDocAnalyze'
+// import { useStore } from '~/store/index'
+import { UseDocMenu } from '~/views/doc/compoSables/useDocAnalyze'
 
 export default {
   components: {
     UseDocMenu,
   },
-  setup() {
-    const store = useStore()
-    console.log(store, docKey)
-    const getDocCurrent = (value: Function) => {
-      console.log(value)
-    }
-    return {
-      getDocCurrent,
-    }
-  },
+  setup() {},
+  methods: {},
 }
 </script>
 
@@ -40,7 +31,6 @@ export default {
 
 .container {
   .header {
-    height: 35px;
     padding: 12px 24px;
     border-bottom: 1px solid rgba(60, 60, 67, 0.12);
     display: flex;
