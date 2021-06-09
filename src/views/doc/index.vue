@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <header class="header" @click="handleTest">Doc</header>
+    <header class="header">Doc Record</header>
     <div class="content">
       <aside class="aside">
         <UseDocMenu />
@@ -35,10 +35,13 @@ export default {
     border-bottom: 1px solid rgba(60, 60, 67, 0.12);
     display: flex;
     align-items: center;
+    height: 64px;
+    font-size: 24px;
   }
   .content {
     display: flex;
     width: 100%;
+    height: 100%;
     .aside {
       width: 320px;
       z-index: 10;

@@ -1,10 +1,15 @@
 
 
 .sidebar-ul {
-  padding: 7px 20px;
+  padding: 3px 20px;
 }
 
 .sidebar-li {
   cursor: pointer;
   color: #2c3e50;
+  padding: 4px 10px;
+}
+
+.sidebar-li:hover {
+  background-color: rgba(0, 0, 0, 0.018);
 }

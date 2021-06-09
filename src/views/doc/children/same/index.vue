@@ -15,3 +15,9 @@ export default {
   },
 }
 </script>
+<style scoped lang="scss">
+.container-same {
+  max-width: 868px;
+  margin: 0 auto;
+}
+</style>
