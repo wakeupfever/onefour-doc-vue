@@ -65,12 +65,13 @@ const createMenuElement = (
             'div',
             {
               class: ['sidebar-li'],
-              onClick: () => {
+              onClick: async () => {
                 const keys = Object.keys(MENU_DOC)
                 const values = Object.values(MENU_DOC)
                 const keyIndex = keys.findIndex((name) =>
                   name.includes(item.name),
                 )
+                console.log(values[keyIndex]);
                 ctx.emit('setDocCurrent', values[keyIndex])
               },
             },
