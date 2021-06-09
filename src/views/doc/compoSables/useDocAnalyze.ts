@@ -73,9 +73,6 @@ const createMenuElement = (
                   name.includes(item.name),
                 )
                 const result = await values[keyIndex]()
-                await nextTick()
-                console.log(result.default)
-
                 store.commit(`doc/${SET_DOC_CURRENT_PATH}`, result)
               },
             },
