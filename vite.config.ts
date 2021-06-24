@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { md } from '@cutting/rollup-plugin-md'
+// import Markdown from 'vite-plugin-md'
 
 export default defineConfig({
   css: {

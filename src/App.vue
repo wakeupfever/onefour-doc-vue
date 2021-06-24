@@ -17,4 +17,8 @@ export default defineComponent({
 
 <style lang="scss">
 @import url('./assets/stylus/common/index.scss');
+
+#app {
+  height: 100vh;
+}
 </style>

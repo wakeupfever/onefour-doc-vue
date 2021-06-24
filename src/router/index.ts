@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/doc',
+    redirect: '/home',
   },
   {
     path: '/doc',
@@ -27,6 +27,12 @@ const routes: RouteRecordRaw[] = [
     name: 'test',
     component: () =>
       import(/* webpackChunkName: "test" */ '~/views/test/index.vue'),
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: () =>
+      import(/* webpackChunkName: "test" */ '~/views/home/index.vue'),
   },
 ]
 
