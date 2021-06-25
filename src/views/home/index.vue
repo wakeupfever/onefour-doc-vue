@@ -3,7 +3,7 @@
   <div
     class="content"
     :style="{
-      backgroundImage: `url(${imgPath})`,
+      backgroundImage: `url(./16953.webp)`,
     }"
   >
     <div class="main">
@@ -15,20 +15,8 @@
   </div>
 </template>
 <script lang="ts">
-import { ref } from '@vue/runtime-core'
-import useImg from '~/components/useImg'
 export default {
-  async setup() {
-    const { status, data } = await useImg()
-    const imgPath = ref(null)
-    if (status === 200) {
-      const [item] = data
-      imgPath.value = item.src.bigSrc
-    }
-    return {
-      imgPath,
-    }
-  },
+  async setup() {},
 }
 </script>
 <style lang="scss" scoped>
@@ -37,5 +25,8 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  .main {
+    color: white;
+  }
 }
 </style>
