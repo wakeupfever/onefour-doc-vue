@@ -15,8 +15,30 @@
   </div>
 </template>
 <script lang="ts">
+import { PromiseFns } from '../../../src/code/solution/base/promise.js'
 export default {
-  async setup() {},
+  async setup() {
+    const promise = new PromiseFns((resolve, reject) => {
+      resolve('success')
+    })
+    const p1 = promise.then((value) => {
+      console.log(1)
+      console.log('resolve', value)
+      return p1
+    })
+
+    // 运行的时候会走reject
+    p1.then(
+      (value) => {
+        console.log(2)
+        console.log('resolve', value)
+      },
+      (reason) => {
+        console.log(3)
+        console.log(reason.message)
+      },
+    )
+  },
 }
 </script>
 <style lang="scss" scoped>
