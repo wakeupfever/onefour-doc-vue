@@ -1,10 +1,10 @@
 /**
  * @description 深拷贝
- * @param {RegExp|Error|Date|Function|Symbol|Map|Set|Array|Object} val
+ * @param {RegExp|Error|Date|export Function|Symbol|Map|Set|Array|Object} val
  * @param {WeakMap} [hash=new WeakMap()]
- * @return {RegExp|Error|Date|Function|Symbol|Map|Set|Array|Object}
+ * @return {RegExp|Error|Date|export Function|Symbol|Map|Set|Array|Object}
  */
-function deepCloneFns(val, hash = new WeakMap()) {
+export function deepCloneFns(val, hash = new WeakMap()) {
   if (!val) {
     return val
   }
@@ -17,7 +17,7 @@ function deepCloneFns(val, hash = new WeakMap()) {
       return new Error(val.message)
     case Date:
       return new Date(val.getTime())
-    case Function:
+    case export Function:
       return eval(`() => ${val.toString()}`)()
     case Symbol:
       return ctor(val.toString().replace(/^Symbol\((.*)\)$/, '$1'))
@@ -46,7 +46,7 @@ function deepCloneFns(val, hash = new WeakMap()) {
  * @param {Number} n
  * @return {Number}
  */
-function reverseNumberFns(n) {
+export function reverseNumberFns(n) {
   if (!n) return
   const max = 2 ** 31 - 1
   const min = -(2 ** 31)
@@ -65,13 +65,13 @@ function reverseNumberFns(n) {
  * @param {*} ctor
  * @return {object}
  */
-function newFns(ctor) {
-  if (typeof ctor !== 'function') return
+export function newFns(ctor) {
+  if (typeof ctor !== 'export function') return
   var obj = Object.create(ctor)
   var argArr = [].split(0, 1)
   var result = ctor.call(obj, argArr)
   var isObj = typeof result === 'object'
-  var isFun = typeof result === 'function'
+  var isFun = typeof result === 'export function'
   if (isObj || isFun) {
     return result
   }
@@ -80,11 +80,11 @@ function newFns(ctor) {
 
 /**
  * @description 报错继续执行次数
- * @param {Function} fn
+ * @param {export Function} fn
  * @param {number} n
- * @return {Function}
+ * @return {export Function}
  */
-function withRetryFns(fn, n) {
+export function withRetryFns(fn, n) {
   let retryTime = 0
   const fnRetry = (...args) => {
     new Promise((resolve) => resolve(fn(...args))).catch((error) =>
@@ -103,25 +103,20 @@ function withRetryFns(fn, n) {
  * @param {*} s
  * @return {*}
  */
-function validPalindrome(s) {
-  let len = s.length
-  for (let i = 0; i < len; i++) {
-    // 回文字符不相等
-    if (s[i] !== s[len - i - 1]) {
-      // 右移左指针
-      if (s[i + 1] === s[len - i - 1]) {
-        // let temp = s.split('')
-        // temp.splice(i, 1)
-        // return temp.join(',')
-        return false
-        // 左移右指针
-      } else if (s[i] === s[len - i - 1 - 1]) {
-        // let temp = s.split('')
-        // temp.splice(len - i - 1, 1)
-        // return temp.join(',')
-        return false
-      }
-    }
+export function validPalindrome(s) {
+  const len = s.length
+  let left = 0,
+    right = len - 1
+
+  while (left < right && s[left] === s[right]) {
+    left++
+    right--
   }
-  return true
+
+  if (s[left + 1] === s[right]) {
+    return s[left]
+  }
+  if (s[left] === s[right - 1]) {
+    return s[right]
+  }
 }
