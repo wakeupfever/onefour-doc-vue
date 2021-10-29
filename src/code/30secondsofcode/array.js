@@ -182,3 +182,48 @@ export const initializeNDArray = (val, ...args) => {
  */
 export const isContainedIn = (a, b) =>
   [...new Set([...a, ...b])].length === b.length
+
+/**
+ * @description a b 是否有包含的内容
+ * @param {*} a
+ * @param {*} b
+ */
+export const isDisjoint = (a, b) =>
+  new Set([...new Set(a), ...new Set(b)]).size === a.size + b.size
+
+/**
+ * @description 柯里化
+ * @param {*} fn
+ * @return {*}
+ */
+export const curry = (fn) => {
+  return (judge = (...args) => {
+    let result = args.length >= fn.length
+    if (result) {
+      return fn(...args)
+    } else {
+      return (...arg) => judge(...args, arg)
+    }
+  })
+}
+
+/**
+ * @deprecated 创建一个n由连续元素组成的元组数组
+ * @param {*} n
+ * @param {*} arr
+ */
+export const aperture = (n, arr) =>
+  n > arr.length ? [] : arr.slice(n - 1).map((v, i) => arr.slice(i, i + n))
+
+/**
+ * @description 自定义实现 bing 方法
+ * @param {*} fn
+ * @param {*} context
+ * @param {*} boundArgs
+ * @return {*}
+ */
+export const bind = (fn, context, ...boundArgs) => {
+  return (...args) => {
+    return fn.apply(context, [...boundArgs, ...args])
+  }
+}
