@@ -1,29 +1,27 @@
 /**
- * @description 确保该值不是undefined或null使用Array.prototype.includes()
- * @description 比较constructor值上的属性type以检查提供的值是否属于指定的type
+ * @implements 确保该值不是undefined或null使用Array.prototype.includes(), 比较constructor值上的属性type以检查提供的值是否属于指定的type
+ * @example is(Array, [1]) // true
+ * @example is(ArrayBuffer, new ArrayBuffer()) // true
+ * @example is(Map, new Map()) // true
+ * @example is(RegExp, /./g) // true
+ * @example is(Set, new Set()) // true
+ * @example is(WeakMap, new WeakMap()) // true
+ * @example is(WeakSet, new WeakSet()) // true
+ * @example is(String, '') // true
+ * @example is(String, new String('')) // true
+ * @example is(Number, 1) // true
+ * @example is(Number, new Number(1)) // true
+ * @example is(Boolean, true) // true
+ * @example is(Boolean, new Boolean(true)) // true
  * @param {*} type
  * @param {*} val
  */
 export const is = (type, val) =>
   ![, null].includes(val) && val.constructor === type
 
-is(Array, [1]) // true
-is(ArrayBuffer, new ArrayBuffer()) // true
-is(Map, new Map()) // true
-is(RegExp, /./g) // true
-is(Set, new Set()) // true
-is(WeakMap, new WeakMap()) // true
-is(WeakSet, new WeakSet()) // true
-is(String, '') // true
-is(String, new String('')) // true
-is(Number, 1) // true
-is(Number, new Number(1)) // true
-is(Boolean, true) // true
-is(Boolean, new Boolean(true)) // true
-
 /**
- * @description 使用Array.from()以产生所需的长度的阵列，Array.prototype.fill()与期望的值来填充它。
- * @description 省略最后一个参数 ，val以使用默认值0
+ * @description 根据参数 指定生成数组
+ * @implements 使用Array.from()以产生所需的长度的阵列，Array.prototype.fill()与期望的值来填充它。
  * @param {*} n
  * @param {number} [val=0]
  */
@@ -34,7 +32,7 @@ initializeArrayWithValues(5, 2) // [2, 2, 2, 2, 2]
 
 /**
  * @description 通过索引确定数组的执行元素
- * @description 如果索引是负数按照倒叙来访问
+ * @implements 如果索引是负数按照倒叙来访问
  * @param {*} list
  * @param {*} n
  * @return {*}
@@ -48,8 +46,12 @@ export const nthArray = (list, n) => {
 /**
  * @description 判断数组是升序/降序，升序 1 降序 -1 其他 0
  * @param {*} arr
+ * @example isSorted([0, 1, 2, 2]) // 1
+ * @example isSorted([4, 3, 2]) // -1
+ * @example isSorted([4, 3, 5]) // 0
+ * @example isSorted([4]) // 0
  */
-const isSorted = (arr) => {
+export const isSorted = (arr) => {
   if (arr.length <= 1) return 0
   const direction = arr[1] - arr[0]
   for (let i = 2; i < arr.length; i++) {
@@ -58,11 +60,6 @@ const isSorted = (arr) => {
   }
   return Math.sign(direction)
 }
-
-isSorted([0, 1, 2, 2]) // 1
-isSorted([4, 3, 2]) // -1
-isSorted([4, 3, 5]) // 0
-isSorted([4]) // 0
 
 /**
  * @description 数组合集
@@ -96,6 +93,7 @@ export const average = (...arr) => arr.reduce((c, p) => c + p, 0) / arr.length
 
 /**
  * @description 随机数组内索引位置
+ * @implements while 循环 通过 Math.floor(Math.random() * m) 得到在数组长度随机的数字 在依次减少 停止循环 达到随机改变索引的效果
  * @param {*} [...arr]
  * @return {*}
  */
@@ -110,6 +108,7 @@ export const shuffle = ([...arr]) => {
 
 /**
  * @description 数组差集/合集
+ * @implements 合并 ab 数组 在 Array.filter 过来判断是否在于a或者b 这里就区分了如果是 并 提取合计 如果是 或 并且不包含 提取取反
  * @param {*} a
  * @param {*} b
  */
@@ -119,6 +118,7 @@ export const uniqueSymmetricDifference = (a, b) =>
 
 /**
  * @description 统计数组内某一个值出现的次数
+ * @implements 通过 Array.reduce 来循环 数组 然后累计 指定的值的次数
  * @param {*} arr
  * @param {*} val
  */
@@ -127,6 +127,7 @@ export const countOccurrences = (arr, val) =>
 
 /**
  * @description 矩阵
+ * @implements 低配版的生成二维举证
  * @param {*} w
  * @param {*} h
  * @param {*} val
@@ -161,11 +162,11 @@ export const haveSameContents = (a, b) => {
 
 /**
  * @description 根据传入 args 的值生成每一层的矩阵信息
+ * @implements 以递归的形式通过 Array.from 生成对应长度数组 呈现出指定矩形的效果
  * @param {*} val
  * @param {*} args
  */
 export const initializeNDArray = (val, ...args) => {
-  console.log(args.length, args[0])
   let result =
     args.length === 0
       ? val
@@ -177,6 +178,7 @@ export const initializeNDArray = (val, ...args) => {
 
 /**
  * @description 判断 b 数组内 是否包含 a
+ * @implements 通过 set 自动去重的形式 b 只要包含了 a 并且长度没有变化 那么就是完全包含的 但是这里有个小缺陷 并不能区分 字符串和数字类型
  * @param {*} a
  * @param {*} b
  */
@@ -193,6 +195,7 @@ export const isDisjoint = (a, b) =>
 
 /**
  * @description 柯里化
+ * @implements 返回方法 判断 方法参数长度是
  * @param {*} fn
  * @return {*}
  */
@@ -217,6 +220,7 @@ export const aperture = (n, arr) =>
 
 /**
  * @description 自定义实现 bing 方法
+ * @implements fn 调用 apply 改变 this 到 context，同时传入返回方法的参数 args
  * @param {*} fn
  * @param {*} context
  * @param {*} boundArgs
@@ -226,4 +230,47 @@ export const bind = (fn, context, ...boundArgs) => {
   return (...args) => {
     return fn.apply(context, [...boundArgs, ...args])
   }
+}
+
+/**
+ * @description 查找val数组中的所有索引。如果val从未发生，则返回一个空数组
+ * @implements 通过数组自带 reduce 方法，用数组记录 val 一样的值 存储索引 最后返回数组
+ * @param {*} arr
+ * @param {*} val
+ */
+export const indexOfAll = (arr, val) =>
+  arr.reduce((p, c, i) => (c === val ? [...p, i] : p), [])
+
+/**
+ * @description 返回数组重复的值
+ * @implements 一层循环，记录每一个元素重复的次数，得到所有元素重复的次数，这时返回想要的即可
+ * @param {*} arr
+ */
+export const filterUnique = (arr) => {
+  const result = new Map()
+  arr.reduce((p, c) => {
+    let val = p.get(c)
+    !p.has(c) ? p.set(c, 0) : p.set(c, (val += 1))
+    return p
+  }, result)
+  return [...result.keys()].filter(
+    (val, index) => [...result.values()][index] !== 0,
+  )
+}
+
+/**
+ * @description 返回数组不重复的值
+ * @implements 一层循环，记录每一个元素重复的次数，得到所有元素重复的次数，这时返回想要的即可
+ * @param {*} arr
+ */
+export const filterNonUnique = (arr) => {
+  const result = new Map()
+  arr.reduce((p, c) => {
+    let val = p.get(c)
+    !p.has(c) ? p.set(c, 0) : p.set(c, (val += 1))
+    return p
+  }, result)
+  return [...result.keys()].filter(
+    (val, index) => [...result.values()][index] === 0,
+  )
 }
