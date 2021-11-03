@@ -324,3 +324,69 @@ export const minBy = (arr, fn) =>
     null,
     arr.map((item) => (typeof fn === 'function' ? item.n : item[fn])),
   )
+
+/**
+ * @description 有序数组中查找指定值的索引
+ * @implements 因为是有序数组 可以采用对撞指针循环的方式来查找对应值的索引
+ * @param {*} arr
+ * @param {*} item
+ * @return {*}
+ */
+export const binarySearch = (arr, item) => {
+  let l = 0,
+    r = arr.length - 1
+  while (r > l) {
+    const mid = Math.floor((l + r) / 2)
+    const guess = arr[mid]
+    if (guess === item) return mid
+    guess > item ? (r = mid - 1) : (l = mid + 1)
+  }
+  return -1
+}
+
+/**
+ * @description 合并两个有序数组
+ * @implements 双指针从前变更
+ * @param {*} a
+ * @param {*} b
+ * @return {*}
+ */
+export const mergeSort = (a, b) => {
+  let l = 0,
+    r = 0,
+    result = []
+  while (l < a.length || r < b.length) {
+    if (a[l] > b[r]) {
+      result.push(b[r])
+      r++
+    } else if (a[l] < b[r]) {
+      result.push(a[l])
+      l++
+    } else {
+      a[l] && result.push(a[l])
+      b[r] && result.push(b[r])
+      r++
+      l++
+    }
+  }
+  return result
+}
+
+/**
+ * @description 组合多个对象数组，使用指定的键来匹配合并对象
+ * @implements Array.reduce 传入 对象 把指定的键作为key，合并累计之前的值
+ * @param {*} list
+ * @param {*} prop
+ * @return {*}
+ */
+export const combine = (list, prop) => {
+  let result = {}
+  return Object.values(
+    list.reduce((p, c) => {
+      if (c[prop]) {
+        p[c[prop]] = { ...p[c[prop]], ...c }
+      }
+      return p
+    }, result),
+  )
+}
