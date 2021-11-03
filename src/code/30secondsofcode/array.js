@@ -274,3 +274,53 @@ export const filterNonUnique = (arr) => {
     (val, index) => [...result.values()][index] === 0,
   )
 }
+
+/**
+ * @description 将数组分为 n 块的数组
+ * @implements 先取出 n 块的大小 然后 Array.from 把 n 当做长度 通过 size 切割数组
+ * @param {*} arr
+ * @param {*} n
+ * @return {*}
+ */
+export const chunkIntoN = (arr, n) => {
+  const size = Math.ceil(arr.length / n)
+  return Array.from({ length: n }, (val, i) => {
+    arr.slice(size, size * i + size)
+  })
+}
+
+/**
+ * @description 将多维数组转变成一维数组
+ * @implements 通过 Array.from 迭代数组 判断当前项是否是数组 如果是数组 那就递归调用当前方法 如果不是 那就累计所有结果
+ * @param {*} arr
+ * @return {*}
+ */
+export const flatten = (arr) => {
+  return arr.reduce((p, c) => {
+    return Array.isArray(c) ? flatten([...p, ...c]) : [...p, c]
+  }, [])
+}
+
+/**
+ * @description 对象数组 提取最大值
+ * @implements 调用 Array.map 把指定属性 fn 提取成数组 调用 Math.max 提取数组最大值 对象数组
+ * @param {*} arr
+ * @param {*} fn
+ */
+export const maxBy = (arr, fn) =>
+  Math.max.apply(
+    null,
+    arr.map((item) => (typeof fn === 'function' ? item.n : item[fn])),
+  )
+
+/**
+ * @description 对象数组 提取最小值
+ * @implements 对象数组 调用 Array.map 把指定属性 fn 提取成数组 调用 Math.min 提取数组最小值
+ * @param {*} arr
+ * @param {*} fn
+ */
+export const minBy = (arr, fn) =>
+  Math.min.apply(
+    null,
+    arr.map((item) => (typeof fn === 'function' ? item.n : item[fn])),
+  )
