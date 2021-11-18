@@ -390,3 +390,56 @@ export const combine = (list, prop) => {
     }, result),
   )
 }
+
+/**
+ * @description 笛卡尔积结果
+ * @param {*} arr
+ * @return {*}
+ */
+export const xProd = (...arr) =>
+  arr.reduce(
+    (prev, current) =>
+      prev.flatMap((prevVal) =>
+        current.map((currentVal) => [prevVal, currentVal]),
+      ),
+    [],
+  )
+
+/**
+ * @description 冒泡排序
+ * @implements 双重循环 前后比对
+ * @param {*} arr
+ * @return {*}
+ */
+export const bubbleSort = (arr) => {
+  let len = arr.length
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < len - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+      }
+    }
+  }
+  return arr
+}
+
+/**
+ * @description 将两个已排序的数组合并为一个
+ * @implements 利用 Array.from 得到两个数组合并之后长度，然后再比对两个有序数组之间的值
+ * @param {*} a
+ * @param {*} b
+ * @return {*}
+ */
+export const mergeSortedArrays = (a, b) => {
+  const _a = [...a]
+  const _b = [...b]
+  return Array.from({ length: _a.length + _b.length }, () => {
+    if (_a.length) {
+      return _a.shift()
+    } else if (_b.length) {
+      return _b.shift()
+    } else {
+      return _a[0] > _b[0] ? _b.shift() : _a.shift()
+    }
+  })
+}

@@ -1,9 +1,11 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <Suspense>
-      <component :is="Component" />
-    </Suspense>
-  </router-view>
+  <keep-alive :include="['/home']">
+    <router-view v-slot="{ Component }">
+      <Suspense>
+        <component :is="Component" />
+      </Suspense>
+    </router-view>
+  </keep-alive>
 </template>
 
 <script lang="ts">
