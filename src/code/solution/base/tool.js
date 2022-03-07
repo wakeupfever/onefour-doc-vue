@@ -1,8 +1,8 @@
 /**
  * @description 深拷贝
- * @param {RegExp|Error|Date|export Function|Symbol|Map|Set|Array|Object} val
+ * @param {RegExp|Error|Date|Function|Symbol|Map|Set|Array|Object} val
  * @param {WeakMap} [hash=new WeakMap()]
- * @return {RegExp|Error|Date|export Function|Symbol|Map|Set|Array|Object}
+ * @return {RegExp|Error|Date|Function|Symbol|Map|Set|Array|Object}
  */
 export function deepCloneFns(val, hash = new WeakMap()) {
   if (!val) {
@@ -17,7 +17,7 @@ export function deepCloneFns(val, hash = new WeakMap()) {
       return new Error(val.message)
     case Date:
       return new Date(val.getTime())
-    case export Function:
+    case Function:
       return eval(`() => ${val.toString()}`)()
     case Symbol:
       return ctor(val.toString().replace(/^Symbol\((.*)\)$/, '$1'))
@@ -66,12 +66,12 @@ export function reverseNumberFns(n) {
  * @return {object}
  */
 export function newFns(ctor) {
-  if (typeof ctor !== 'export function') return
+  if (typeof ctor !== 'function') return
   var obj = Object.create(ctor)
   var argArr = [].split(0, 1)
   var result = ctor.call(obj, argArr)
   var isObj = typeof result === 'object'
-  var isFun = typeof result === 'export function'
+  var isFun = typeof result === 'function'
   if (isObj || isFun) {
     return result
   }
@@ -80,9 +80,9 @@ export function newFns(ctor) {
 
 /**
  * @description 报错继续执行次数
- * @param {export Function} fn
+ * @param {Function} fn
  * @param {number} n
- * @return {export Function}
+ * @return {Function}
  */
 export function withRetryFns(fn, n) {
   let retryTime = 0
